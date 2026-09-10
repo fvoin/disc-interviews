@@ -16,6 +16,8 @@ highlighted in yellow (found by a cloud LLM: Gemini / OpenAI / Anthropic).
 
 Design: `docs/specs/2026-09-07-disc-interviews-design.md`. Plan: `docs/plans/`.
 
+Extraction: MP4-family sources already in H.264 / AAC are copied, not re-encoded; a DVD that yields less than its IFO playback time is re-read sector by sector with unreadable sectors zero-filled (`disc/salvage.py`). Review: ⌘] / ⌘[ walk the yellow spots, ⌘↩ applies the fix, ⌘⌫ removes the mark; «Fair copy (Word)…» writes the text without highlights.
+
 Sources: a DVD (VIDEO_TS), a disc or folder with media files, a single file ("Open file…"), an ISO. Thumbnails, probe results and the 30-second sample of every disc go to `~/.disc-interviews/cache/`; the project folder under the output dir is created only by Extract.
 
 Without the disc: "Open folder…" on a saved project (the `<output>/<disc>` folder, or one interview folder inside it) resumes it — cached media, transcript, marks and edits — instead of scanning it as a folder of media files (`disc_interviews/disc/project.py`).
