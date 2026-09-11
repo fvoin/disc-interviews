@@ -14,6 +14,8 @@ highlighted in yellow (found by a cloud LLM: Gemini / OpenAI / Anthropic).
 ./release.sh                     # code snapshot → private fvoin/disc-interviews-code; DMGs → public fvoin/disc-interviews Releases (in-app updater)
 ```
 
+No Mac at hand: the `release` workflow (Actions tab, or push a `v*` tag) builds both DMGs on GitHub's macOS runners and publishes the same release; it needs the `RELEASE_TOKEN` secret (fine-grained PAT, Contents read/write on `fvoin/disc-interviews`).
+
 Design: `docs/specs/2026-09-07-disc-interviews-design.md`. Plan: `docs/plans/`.
 
 Extraction: MP4-family sources already in H.264 / AAC are copied, not re-encoded; a DVD that yields less than its IFO playback time is re-read sector by sector with unreadable sectors zero-filled (`disc/salvage.py`). Review: ⌘] / ⌘[ walk the yellow spots, ⌘↩ applies the fix, ⌘⌫ removes the mark; «Fair copy (Word)…» writes the text without highlights.
