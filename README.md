@@ -2,8 +2,7 @@
 
 macOS app: insert a DVD with recorded interviews → see the titles with thumbnails →
 listen / save the video as MP4 (one pass over the disc) → transcribe locally (NVIDIA Parakeet TDT v3 via parakeet-mlx,
-Whisper fallback) → produce a Word/HTML review copy with likely recognition errors
-highlighted in yellow (found by a cloud LLM: Gemini / OpenAI / Anthropic).
+Whisper fallback) → read and correct the text in place, like in Word (it saves itself) → write it out as a Word document.
 
 ```bash
 /Library/Frameworks/Python.framework/Versions/3.11/bin/python3 -m venv .venv
@@ -18,7 +17,7 @@ No Mac at hand: every push to `main` runs the `release` workflow, which builds b
 
 Design: `docs/specs/2026-09-07-disc-interviews-design.md`. Plan: `docs/plans/`.
 
-Extraction: MP4-family sources already in H.264 / AAC are copied, not re-encoded; a DVD that yields less than its IFO playback time is re-read sector by sector with unreadable sectors zero-filled (`disc/salvage.py`). Review: ⌘] / ⌘[ walk the yellow spots, ⌘↩ puts the likely fix into the sentence editor (the yellow mark stays until Save), ⌘⌫ removes the mark; the full list is under Settings → Shortcuts. «Fair copy (Word)…» writes the text without highlights.
+Extraction: MP4-family sources already in H.264 / AAC are copied, not re-encoded; a DVD that yields less than its IFO playback time is re-read sector by sector with unreadable sectors zero-filled (`disc/salvage.py`). Text: one editable document, a paragraph per block, the paragraph's time in the left margin (click it to play from there); edits are saved to `transcript.json` a moment after typing, and the Word document is built from that text. The AI review of doubtful spots is gone from the app; its settings tab stays for a possible return.
 
 Player: the 1× / 1.5× / 2× box left of Play sets the speed of every playback (player, clicked word, «Play sentence»); a copy of the sound stretched with ffmpeg's `atempo` (pitch kept) is rendered once per interview and rate into `~/.disc-interviews/cache/tempo/`. Pane boundaries carry a dotted grip; drag them (side panes and the thumbnails/info block collapse, the player stays), double-click a grip to collapse or restore, and the layout is saved to the config. The window itself shrinks freely: the action column and the thumbnails/info block scroll when short, side-pane labels shrink and elide, and a pane dragged shut no longer counts towards the minimum width.
 
