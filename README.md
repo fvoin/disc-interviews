@@ -14,11 +14,13 @@ highlighted in yellow (found by a cloud LLM: Gemini / OpenAI / Anthropic).
 ./release.sh                     # code snapshot → private fvoin/disc-interviews-code; DMGs → public fvoin/disc-interviews Releases (in-app updater)
 ```
 
-No Mac at hand: the `release` workflow (Actions tab, or push a `v*` tag) builds both DMGs on GitHub's macOS runners and publishes the same release; it needs the `RELEASE_TOKEN` secret (fine-grained PAT, Contents read/write on `fvoin/disc-interviews`).
+No Mac at hand: every push to `main` runs the `release` workflow, which builds both DMGs on GitHub's macOS runners and publishes the same release whenever `APP_VERSION` has none yet (so: bump the version, push, done); it needs the `RELEASE_TOKEN` secret (PAT with write access to `fvoin/disc-interviews`).
 
 Design: `docs/specs/2026-09-07-disc-interviews-design.md`. Plan: `docs/plans/`.
 
-Extraction: MP4-family sources already in H.264 / AAC are copied, not re-encoded; a DVD that yields less than its IFO playback time is re-read sector by sector with unreadable sectors zero-filled (`disc/salvage.py`). Review: ⌘] / ⌘[ walk the yellow spots, ⌘↩ applies the fix, ⌘⌫ removes the mark; «Fair copy (Word)…» writes the text without highlights.
+Extraction: MP4-family sources already in H.264 / AAC are copied, not re-encoded; a DVD that yields less than its IFO playback time is re-read sector by sector with unreadable sectors zero-filled (`disc/salvage.py`). Review: ⌘] / ⌘[ walk the yellow spots, ⌘↩ puts the likely fix into the sentence editor (the yellow mark stays until Save), ⌘⌫ removes the mark; the full list is under Settings → Shortcuts. «Fair copy (Word)…» writes the text without highlights.
+
+Player: the 1× / 1.5× / 2× box left of Play sets the speed of every playback (player, clicked word, «Play sentence»); a copy of the sound stretched with ffmpeg's `atempo` (pitch kept) is rendered once per interview and rate into `~/.disc-interviews/cache/tempo/`. Pane boundaries carry a dotted grip; drag them (side panes and the thumbnails/info block collapse, the player stays), double-click a grip to collapse or restore, and the layout is saved to the config. The window itself shrinks freely: the action column and the thumbnails/info block scroll when short, side-pane labels shrink and elide, and a pane dragged shut no longer counts towards the minimum width.
 
 Sources: a DVD (VIDEO_TS), a disc or folder with media files, a single file ("Open file…"), an ISO. Thumbnails, probe results and the 30-second sample of every disc go to `~/.disc-interviews/cache/`; the project folder under the output dir is created only by Extract.
 
